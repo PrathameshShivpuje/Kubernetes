@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+ name: nginxstrategydeployment
+ labels: 
+  labelname: starategydeployment
+ namespace: my-namespace
+
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+   labelname: starategydeployment
+ strategy:
+  type: RollingUpdate
+  rollingUpdate:
+    maxSurge: 1
+    maxUnavailable: 1
+ template:
+  metadata:
+    labels:
+     labelname: starategydeployment
+  spec:
+   containers:
+     - name: nginxcontainer
+       image: nginx:latest
+       ports:
+       - containerPort: 80

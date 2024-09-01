@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+ name: initcontainerdeployment
+ labels:
+  labelname: myapp
+
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+    labelname: myapp
+
+ template:
+  metadata:
+   labels:
+     labelname: myapp
+
+  spec:
+   initContainers:  # Defined the init container
+   - name: myinitcontainer
+     image: busybox:1.31.1
+     command: ['sh', '-c', 'echo initializing.... && sleep 10']  # Commands to run by init container
+# N number of init containers we can run before running the main container
+   containers:
+   - name: mycontainer
+     image: nginx:latest
+     ports:
+     - containerPort: 80

@@ -1,0 +1,10 @@
+# This ClusterRole grants read access to all pods across the entire cluster.
+
+apiVersion: rbac.authorization.k8.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-pod-reader
+rules:
+- apiGroup: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]

@@ -1,0 +1,15 @@
+# In this file we have deployed pod with node selector(To deploy the pod on the specific node).
+# First we have to lable the node then write the manifest file for it and mention the label as nodeselector
+# (kubectl lable nodes node_name key=value)
+
+apiVersion: v1 
+kind: Pod 
+metadata:
+  name: nodeselectorpod
+
+spec:
+ containers:
+   - name: mycontainer
+     image: nginx:latest
+ nodeSelector:    # deploying pod on specific labelled node 
+     disk: ssd

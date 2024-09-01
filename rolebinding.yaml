@@ -1,0 +1,15 @@
+# This RoleBinding grants the pod-reader Role to a user named prathamesh within the default namespace
+
+apiVersion: rbac.authorization.k8.io/v1
+kind: RoleBinding
+metadata:
+  name: read-pod-binding
+  namespace: default
+subjects: 
+- kind: User
+  name: prathamesh
+  apiGroup: rbac.authorization.k8.io
+roleRef: 
+  kind: Role 
+  name: pod-reader
+  apiGroup: rbac.authorization.k8.io

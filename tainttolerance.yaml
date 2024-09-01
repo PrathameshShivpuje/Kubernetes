@@ -1,0 +1,21 @@
+#  This configuration use toleration so that pod can get deployed on tainted node. 
+#  We can mark node as taint by (kubectl taint node node_name key=value:<effect>).
+
+#  NoSchedule: Prevents new pods that do not tolerate the taint from being scheduled on the node.
+#  PreferNoSchedule: Tries to avoid scheduling new pods on the node, but may still do so if necessary.
+#  NoExecute: Evicts existing pods that do not tolerate the taint and prevents new pods from being scheduled on the node
+
+apiVersion: v1
+kind: Pod 
+metadata:
+ name: taint-tolerance
+
+spec:
+ containers:
+ - name: my-container
+   image: nginx:latest
+ tolerations:
+ - key: "dedicated"
+   operator: "Equal"
+   value: "high-priority"
+   effect: "NoSchedule"

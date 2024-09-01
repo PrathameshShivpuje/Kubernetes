@@ -1,0 +1,11 @@
+# This Role grants read access (list, get) to pods within a specific namespace (e.g., default).
+
+apiVersion: rbac.authorization.k8.io/v1
+kind: Role
+metadata:
+   namespace: default
+   name: pod-reader
+rules:
+- apiGroup: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]

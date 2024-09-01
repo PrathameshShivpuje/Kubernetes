@@ -1,0 +1,22 @@
+# In this configuration we have labelled the node already and passing values in match expression
+# kubectl lable nodes node_name key=value
+# node affintiy have two type of requirments(soft and hard), below example belongs to "soft requirement"
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod1
+spec:
+  containers:
+  - name: my-container
+    image: nginx
+  affinity:
+    nodeAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+          - key: disk
+            operator: In
+            values:
+            - ssd

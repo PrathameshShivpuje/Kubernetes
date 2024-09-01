@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment 
+metadata:
+ name: sidecarcontainerdeployment
+ labels:
+  app: myapp
+
+spec:
+ replicas: 2
+ selector:
+  matchLabels:
+   app: myapp
+ template:
+  metadata:
+    labels:
+      app: myapp
+  spec:
+   containers:
+     - name: maincontainer   # Main application container
+       image: nginx:latest
+       ports:
+       - containerPort: 80
+
+     - name: sidecarcontainer   # Side car container
+       image: busybox
+       command: ['sh', '-c', 'while true; do echo "side car running ; sleep 30; done']

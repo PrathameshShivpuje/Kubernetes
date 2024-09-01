@@ -1,0 +1,14 @@
+# This ClusterRoleBinding grants the cluster-pod-reader ClusterRole to a group named dev-team.
+
+apiVersion: rbac.authorization.k8.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: read-pods-cluster-binding
+subjects:
+- kind: Group 
+  name: dev-team
+  apiGroup: rbac.authorization.k8.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-pod-reader
+  apiGroup: rbac.authorization.k8.io

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: livenessreadynessprobedeployment
+  labels:
+   lablename: livenessreadiness
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+     lablename: livenessreadiness
+  template:
+    metadata:
+     labels:
+      lablename: livenessreadiness
+    spec:
+      containers:
+      - name: nginxcontainer
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+
+        livenessProbe:
+          httpGet:   # The probe checks if the HTTP endpoint '/' on port 80 is reachable
+           path: /
+           port: 80
+          initialDelaySeconds: 10   # The probe waits for 30 seconds after the container starts before performing the first check 
+          periodSeconds: 10   # The probe runs every 10 seconds
+          timeoutSeconds: 5   # If the probe doesn't receive any response within 5 seconds, it considers the probe failed
+          failureThreshold: 3    # If the probe fails 3 consecutive times, Kubernetes restarts the container
+
+        readinessProbe:
+          httpGet:   # The probe checks if the HTTP endpoint '/' on port 80 is reachable
+           path: /
+           port: 80
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+
